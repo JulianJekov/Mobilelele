@@ -5,16 +5,19 @@ import org.softuni.mobilelele.model.entity.User;
 import org.softuni.mobilelele.repository.UserRepository;
 import org.softuni.mobilelele.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -24,12 +27,12 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private static User map(UserRegisterDTO userRegisterDTO) {
+    private User map(UserRegisterDTO userRegisterDTO) {
         return new User()
                 .setActive(true)
                 .setFirstName(userRegisterDTO.getFirstName())
                 .setLastName(userRegisterDTO.getLastName())
                 .setEmail(userRegisterDTO.getEmail())
-                .setPassword(userRegisterDTO.getPassword());
+                .setPassword(this.passwordEncoder.encode(userRegisterDTO.getPassword()));
     }
 }
