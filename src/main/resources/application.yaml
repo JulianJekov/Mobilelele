@@ -8,10 +8,11 @@ spring:
       database-platform: org.hibernate.dialect.MySQLDialect
       hibernate:
           ddl-auto: create-drop
-  devtools:
-    restart:
-      enabled: true
-    livereload:
-      enabled: true
   thymeleaf:
     cache: false
+  devtools:
+    livereload:
+      enabled: true
+
+    restart:
+      enabled: true
