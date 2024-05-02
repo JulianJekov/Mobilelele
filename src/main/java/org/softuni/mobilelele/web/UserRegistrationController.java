@@ -27,6 +27,6 @@ public class UserRegistrationController {
     @PostMapping("/register")
     public String register(UserRegisterDTO userRegisterDTO) {
         this.userService.registerUser(userRegisterDTO);
-        return "redirect:/";
+        return "redirect:/users/login";
     }
 }
