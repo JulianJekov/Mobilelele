@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,13 +33,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean loginUser(UserLoginDTO userLoginDTO) {
 
-        User user = this.userRepository.findByEmail(userLoginDTO.getEmail()).orElse(null);
+        final User user = this.userRepository.findByEmail(userLoginDTO.getEmail()).orElse(null);
 
         boolean loginSuccess = false;
 
         if (user != null) {
-            String rawPassword = userLoginDTO.getPassword();
-            String encodedPassword = user.getPassword();
+            final String rawPassword = userLoginDTO.getPassword();
+            final String encodedPassword = user.getPassword();
 
             loginSuccess = encodedPassword != null && this.passwordEncoder.matches(rawPassword, encodedPassword);
 
@@ -50,11 +49,16 @@ public class UserServiceImpl implements UserService {
                         .setFirstName(user.getFirstName())
                         .setLastName(user.getLastName());
             } else {
-                currentUser.logout();
+                this.currentUser.logout();
             }
         }
 
         return loginSuccess;
+    }
+
+    @Override
+    public void logoutUser() {
+        this.currentUser.logout();
     }
 
 
