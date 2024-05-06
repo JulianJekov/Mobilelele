@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     private User map(UserRegisterDTO userRegisterDTO) {
         return new User()
-                .setActive(true)
+                .setIsActive(true)
                 .setFirstName(userRegisterDTO.getFirstName())
                 .setLastName(userRegisterDTO.getLastName())
                 .setEmail(userRegisterDTO.getEmail())

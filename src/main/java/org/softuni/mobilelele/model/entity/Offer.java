@@ -8,6 +8,7 @@ import org.softuni.mobilelele.model.enums.TransmissionEnum;
 
 import java.math.BigDecimal;
 import java.sql.Types;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -19,10 +20,8 @@ public class Offer extends BaseEntity {
 
     private String description;
 
-    private EngineEnum engine;
-
     @Enumerated(EnumType.STRING)
-    private TransmissionEnum transmission;
+    private EngineEnum engine;
 
     private String imageUrl;
 
@@ -30,13 +29,31 @@ public class Offer extends BaseEntity {
 
     private BigDecimal price;
 
+    @Enumerated(EnumType.STRING)
+    private TransmissionEnum transmission;
+
     private Integer year;
+
+    private LocalDateTime created;
+
+    private LocalDateTime modified;
 
     @ManyToOne
     private Model model;
 
+    @ManyToOne
+    private User seller;
 
     public Offer() {
+    }
+
+    public UUID getUuid() {
+        return uuid;
+    }
+
+    public Offer setUuid(UUID uuid) {
+        this.uuid = uuid;
+        return this;
     }
 
     public String getDescription() {
@@ -54,15 +71,6 @@ public class Offer extends BaseEntity {
 
     public Offer setEngine(EngineEnum engine) {
         this.engine = engine;
-        return this;
-    }
-
-    public TransmissionEnum getTransmission() {
-        return transmission;
-    }
-
-    public Offer setTransmission(TransmissionEnum transmission) {
-        this.transmission = transmission;
         return this;
     }
 
@@ -93,12 +101,39 @@ public class Offer extends BaseEntity {
         return this;
     }
 
+    public TransmissionEnum getTransmission() {
+        return transmission;
+    }
+
+    public Offer setTransmission(TransmissionEnum transmission) {
+        this.transmission = transmission;
+        return this;
+    }
+
     public Integer getYear() {
         return year;
     }
 
     public Offer setYear(Integer year) {
         this.year = year;
+        return this;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public Offer setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    public LocalDateTime getModified() {
+        return modified;
+    }
+
+    public Offer setModified(LocalDateTime modified) {
+        this.modified = modified;
         return this;
     }
 
@@ -111,12 +146,12 @@ public class Offer extends BaseEntity {
         return this;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public User getSeller() {
+        return seller;
     }
 
-    public Offer setUuid(UUID uuid) {
-        this.uuid = uuid;
+    public Offer setSeller(User seller) {
+        this.seller = seller;
         return this;
     }
 }

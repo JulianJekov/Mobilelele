@@ -2,12 +2,15 @@ package org.softuni.mobilelele.model.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity{
+public class User extends BaseEntity {
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
+
 
     private String password;
 
@@ -15,11 +18,16 @@ public class User extends BaseEntity{
 
     private String lastName;
 
-    private Boolean active;
+    private Boolean isActive;
+
+    private String imageUrl;
+
+    private LocalDateTime created;
+
+    private LocalDateTime modified;
 
     public User() {
     }
-
 
     public String getEmail() {
         return email;
@@ -57,12 +65,39 @@ public class User extends BaseEntity{
         return this;
     }
 
-    public Boolean getActive() {
-        return active;
+    public Boolean getIsActive() {
+        return isActive;
     }
 
-    public User setActive(Boolean active) {
-        this.active = active;
+    public User setIsActive(Boolean active) {
+        isActive = active;
+        return this;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public User setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public LocalDateTime getCreated() {
+        return created;
+    }
+
+    public User setCreated(LocalDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    public LocalDateTime getModified() {
+        return modified;
+    }
+
+    public User setModified(LocalDateTime modified) {
+        this.modified = modified;
         return this;
     }
 }
