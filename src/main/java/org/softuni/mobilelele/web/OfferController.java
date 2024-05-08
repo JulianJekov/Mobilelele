@@ -1,13 +1,11 @@
 package org.softuni.mobilelele.web;
 
 import org.softuni.mobilelele.model.dto.CreateOfferDTO;
+import org.softuni.mobilelele.model.enums.EngineEnum;
 import org.softuni.mobilelele.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -26,6 +24,11 @@ public class OfferController {
     @GetMapping("/all")
     public String all() {
         return "offers";
+    }
+
+    @ModelAttribute("engines")
+    public EngineEnum[] engines() {
+        return EngineEnum.values();
     }
 
     @GetMapping("/add")
