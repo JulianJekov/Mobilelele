@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -65,6 +67,7 @@ public class UserServiceImpl implements UserService {
     private User map(UserRegisterDTO userRegisterDTO) {
         return new User()
                 .setIsActive(true)
+                .setCreated(LocalDateTime.now())
                 .setFirstName(userRegisterDTO.getFirstName())
                 .setLastName(userRegisterDTO.getLastName())
                 .setEmail(userRegisterDTO.getEmail())
