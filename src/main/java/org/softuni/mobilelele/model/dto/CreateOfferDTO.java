@@ -1,5 +1,6 @@
 package org.softuni.mobilelele.model.dto;
 
+import jakarta.validation.constraints.*;
 import org.softuni.mobilelele.model.entity.Model;
 import org.softuni.mobilelele.model.enums.EngineEnum;
 import org.softuni.mobilelele.model.enums.TransmissionEnum;
@@ -8,33 +9,39 @@ import java.math.BigDecimal;
 
 public class CreateOfferDTO {
 
-    private Model model;
+    @Positive
+    @NotNull
+    private Long modelId;
 
+    @Positive
+    @NotNull
     private BigDecimal price;
 
+    @NotNull
     private EngineEnum engine;
 
+    @NotNull
     private TransmissionEnum transmission;
 
+    @NotNull
+    @Min(1930)
     private Integer year;
 
+    @Positive
+    @NotNull
     private Integer mileage;
 
+    @NotEmpty
+    @Size(min = 5, max = 512)
     private String description;
 
+    @NotEmpty
     private String imageUrl;
 
     public CreateOfferDTO() {
     }
 
-    public Model getModel() {
-        return model;
-    }
 
-    public CreateOfferDTO setModel(Model model) {
-        this.model = model;
-        return this;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -96,6 +103,15 @@ public class CreateOfferDTO {
 
     public CreateOfferDTO setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public Long getModelId() {
+        return modelId;
+    }
+
+    public CreateOfferDTO setModelId(Long modelId) {
+        this.modelId = modelId;
         return this;
     }
 }

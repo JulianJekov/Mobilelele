@@ -25,7 +25,7 @@ public class Offer extends BaseEntity {
 
     private String imageUrl;
 
-    private Long mileage;
+    private Integer mileage;
 
     private BigDecimal price;
 
@@ -83,11 +83,11 @@ public class Offer extends BaseEntity {
         return this;
     }
 
-    public Long getMileage() {
+    public Integer getMileage() {
         return mileage;
     }
 
-    public Offer setMileage(Long mileage) {
+    public Offer setMileage(Integer mileage) {
         this.mileage = mileage;
         return this;
     }

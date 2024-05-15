@@ -1,6 +1,5 @@
 package org.softuni.mobilelele.model.dto;
 
-import org.softuni.mobilelele.model.entity.Model;
 
 import java.util.List;
 
@@ -8,9 +7,14 @@ public class BrandDTO {
 
     private String name;
 
-    private List<Model> models;
+    private List<ModelDTO> models;
 
     public BrandDTO() {
+    }
+
+    public BrandDTO(String brand, List<ModelDTO> models) {
+        this.name = brand;
+        this.models = models;
     }
 
     public String getName() {
@@ -22,11 +26,11 @@ public class BrandDTO {
         return this;
     }
 
-    public List<Model> getModels() {
+    public List<ModelDTO> getModels() {
         return models;
     }
 
-    public BrandDTO setModels(List<Model> models) {
+    public BrandDTO setModels(List<ModelDTO> models) {
         this.models = models;
         return this;
     }
