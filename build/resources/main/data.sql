@@ -1,6 +1,6 @@
 use mobilelele;
 
-insert into brands (id, brand, created, modified)
+insert into brands (id, name, created, modified)
 values (1, 'Toyota', '1937-3-28 19:30:35', null),
        (2, 'Ford', '1903-6-16 20:20:20', null);
 
