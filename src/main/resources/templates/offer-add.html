@@ -35,7 +35,6 @@
                                 th:value="${model.id}">
                         </option>
 
-
                     </optgroup>
                 </select>
                 <p class="invalid-feedback errors alert alert-danger">
@@ -105,13 +104,14 @@
                        class="form-control"
                        placeholder="Manufacturing year"/>
 <!--                Displaying the error message from the validation annotation -->
-                <p th:if="${#fields.hasErrors('year')}"
+
+                    <p th:if="${#fields.hasErrors('year')}"
                     class="errors alert alert-danger"
                     th:errors="*{year}">
-                </p>
-                <p class="invalid-feedback errors alert alert-danger">
-                    Manufacturing year is required.
-                </p>
+                    </p>
+<!--                <p class="invalid-feedback errors alert alert-danger">-->
+<!--                    Manufacturing year is required.-->
+<!--                </p>-->
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="mileage" class="text-white font-weight-bold">Mileage</label>

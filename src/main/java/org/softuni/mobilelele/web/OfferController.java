@@ -28,7 +28,6 @@ public class OfferController {
         this.brandService = brandService;
     }
 
-
     @ModelAttribute("engines")
     public EngineEnum[] engines() {
         return EngineEnum.values();

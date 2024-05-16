@@ -29,7 +29,7 @@ public class PasswordMatchValidator implements ConstraintValidator<PasswordMatch
         Object firstProperty = beanWrapper.getPropertyValue(this.first);
         Object secondProperty = beanWrapper.getPropertyValue(this.second);
 
-        boolean isValid = Objects.equals(firstProperty, secondProperty);
+        boolean isValid = firstProperty != null && firstProperty.equals(secondProperty);
 
         if (!isValid) {
             context

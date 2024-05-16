@@ -3,6 +3,7 @@ package org.softuni.mobilelele.model.dto;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.softuni.mobilelele.validation.PasswordMatch;
 import org.softuni.mobilelele.validation.UniqueUserEmail;
 
@@ -15,13 +16,15 @@ public class UserRegisterDTO {
     @NotEmpty
     private String lastName;
 
-    @NotNull
+    @NotEmpty(message = "Email is required.")
     @Email
     @UniqueUserEmail
     private String email;
 
+    @NotEmpty
     private String password;
 
+    @NotEmpty(message = "Confirm Password is required")
     private String confirmPassword;
 
     public UserRegisterDTO() {
