@@ -105,10 +105,10 @@
                        class="form-control"
                        placeholder="Manufacturing year"/>
 <!--                Displaying the error message from the validation annotation -->
-<!--                <p th:if="${#fields.hasErrors('year')}"-->
-<!--                    class="errors alert alert-danger"-->
-<!--                    th:errors="*{year}">-->
-<!--                </p>-->
+                <p th:if="${#fields.hasErrors('year')}"
+                    class="errors alert alert-danger"
+                    th:errors="*{year}">
+                </p>
                 <p class="invalid-feedback errors alert alert-danger">
                     Manufacturing year is required.
                 </p>

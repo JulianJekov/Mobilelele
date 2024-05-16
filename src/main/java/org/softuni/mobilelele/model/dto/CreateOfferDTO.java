@@ -4,6 +4,7 @@ import jakarta.validation.constraints.*;
 import org.softuni.mobilelele.model.entity.Model;
 import org.softuni.mobilelele.model.enums.EngineEnum;
 import org.softuni.mobilelele.model.enums.TransmissionEnum;
+import org.softuni.mobilelele.validation.YearNotInTheFuture;
 
 import java.math.BigDecimal;
 
@@ -23,8 +24,9 @@ public class CreateOfferDTO {
     @NotNull
     private TransmissionEnum transmission;
 
-    @NotNull
+    @NotNull(message = "Year must be provided")
     @Min(1930)
+    @YearNotInTheFuture(message = "The year should not be in the future!")
     private Integer year;
 
     @Positive

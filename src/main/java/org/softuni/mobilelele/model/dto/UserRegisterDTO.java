@@ -1,11 +1,23 @@
 package org.softuni.mobilelele.model.dto;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import org.softuni.mobilelele.validation.PasswordMatch;
+import org.softuni.mobilelele.validation.UniqueUserEmail;
+
+@PasswordMatch(first = "password", second = "confirmPassword", message = "Passwords should match")
 public class UserRegisterDTO {
 
+    @NotEmpty
     private String firstName;
 
+    @NotEmpty
     private String lastName;
 
+    @NotNull
+    @Email
+    @UniqueUserEmail
     private String email;
 
     private String password;
