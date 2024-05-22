@@ -2,7 +2,6 @@ package org.softuni.mobilelele.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.hibernate.validator.internal.constraintvalidators.hv.UniqueElementsValidator;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

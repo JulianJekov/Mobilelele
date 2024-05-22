@@ -2,7 +2,10 @@ package org.softuni.mobilelele.web;
 
 import jakarta.validation.Valid;
 import org.softuni.mobilelele.model.dto.CreateOfferDTO;
+import org.softuni.mobilelele.model.dto.UpdateOfferDTO;
+import org.softuni.mobilelele.model.entity.Offer;
 import org.softuni.mobilelele.model.enums.EngineEnum;
+import org.softuni.mobilelele.model.enums.TransmissionEnum;
 import org.softuni.mobilelele.service.BrandService;
 import org.softuni.mobilelele.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/offer")
@@ -35,12 +36,10 @@ public class OfferController {
 
     @GetMapping("/add")
     public String add(Model model) {
-
         if (!model.containsAttribute("createOfferDTO")) {
             model.addAttribute("createOfferDTO", new CreateOfferDTO());
         }
-
-        model.addAttribute("brands", this.brandService.getAllBrands());
+        model.addAttribute("brands", this.brandService.getAllBrandsModels());
         return "offer-add";
     }
 
@@ -54,12 +53,37 @@ public class OfferController {
             return "redirect:/offer/add";
         }
 
-        UUID newOfferUUID = this.offerService.createOffer(createOfferDTO);
-        return "redirect:/offer/" + newOfferUUID;
+        Long newId = this.offerService.createOffer(createOfferDTO);
+        return "redirect:/offers/" + newId + "/details";
     }
 
-    @GetMapping("/{uuid}")
-    public String details(@PathVariable("uuid") UUID uuid) {
-        return "details";
+    @GetMapping("/{id}/update")
+    public String update(@PathVariable Long id, Model model) {
+
+        Offer offer = this.offerService.findById(id);
+        UpdateOfferDTO updateOfferDTO = this.offerService.updateMap(offer);
+
+        if (!model.containsAttribute("updateOfferDTO")) {
+            model.addAttribute("updateOfferDTO", updateOfferDTO);
+        }
+        model.addAttribute("transmissions", TransmissionEnum.values());
+        model.addAttribute("brands", this.brandService.getAllBrandsModels());
+
+        return "update";
     }
+
+    @PatchMapping("/{id}/update")
+    public String update(@PathVariable Long id, @Valid UpdateOfferDTO updateOfferDTO, BindingResult bindingResult,
+                         RedirectAttributes rAtt) {
+
+        if (bindingResult.hasErrors()) {
+            rAtt.addFlashAttribute("updateOfferDTO", updateOfferDTO);
+            rAtt.addFlashAttribute("org.springframework.validation.BindingResult.updateOfferDTO", bindingResult);
+            return "redirect:/offer/update";
+        }
+
+       this.offerService.updateOffer(updateOfferDTO);
+        return "redirect:/offers/" + id + "/details";
+    }
+
 }

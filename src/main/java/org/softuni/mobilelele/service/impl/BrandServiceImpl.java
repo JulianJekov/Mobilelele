@@ -1,7 +1,9 @@
 package org.softuni.mobilelele.service.impl;
 
 import org.softuni.mobilelele.model.dto.BrandDTO;
+import org.softuni.mobilelele.model.dto.BrandViewDTO;
 import org.softuni.mobilelele.model.dto.ModelDTO;
+import org.softuni.mobilelele.model.dto.ModelViewDTO;
 import org.softuni.mobilelele.repository.BrandRepository;
 import org.softuni.mobilelele.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public List<BrandDTO> getAllBrands() {
+    public List<BrandDTO> getAllBrandsModels() {
 
         return this.brandRepository.getAllBrands().stream()
                 .map(brand -> new BrandDTO(
@@ -35,5 +37,18 @@ public class BrandServiceImpl implements BrandService {
                 .sorted(Comparator.comparing(BrandDTO::getName))
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<BrandViewDTO> getAllBrandsView() {
+        return this.brandRepository.findAll()
+                .stream()
+                .map(brand -> new BrandViewDTO(
+                        brand.getName(), brand.getModels().stream()
+                        .map(model -> new ModelViewDTO(model.getName(), model.getCategory(), model.getStartYear(),
+                                model.getEndYear(), model.getImageUrl()))
+                        .collect(Collectors.toList())
+                ))
+                .collect(Collectors.toList());
     }
 }
