@@ -32,3 +32,14 @@ logging:
     org.hibernate.orm.jdbc.bind: trace
 #    org.springframework: debug
 
+open.exchange.rates:
+  schema: https
+  host: openexchangerates.org
+  path: /api/latest.json
+  app_id: ${APP_ID:test}
+  symbols: EUR,BGN
+
+https://openexchangerates:
+  org/api/latest:
+    json?app_id=d9e9c24df6a442fb9883c4d99478402e&symbols=EUR%2CBGN&prettyprint=false&show_alternative=false:
+
