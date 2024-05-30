@@ -5,12 +5,11 @@ import org.softuni.mobilelele.model.dto.OfferViewDTO;
 import org.softuni.mobilelele.model.dto.UpdateOfferDTO;
 import org.softuni.mobilelele.model.entity.Model;
 import org.softuni.mobilelele.model.entity.Offer;
-import org.softuni.mobilelele.model.entity.User;
+import org.softuni.mobilelele.model.entity.UserEntity;
 import org.softuni.mobilelele.repository.ModelRepository;
 import org.softuni.mobilelele.repository.OfferRepository;
 import org.softuni.mobilelele.repository.UserRepository;
 import org.softuni.mobilelele.service.OfferService;
-import org.softuni.mobilelele.util.CurrentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,21 +22,19 @@ public class OfferServiceImpl implements OfferService {
 
     private final OfferRepository offerRepository;
     private final ModelRepository modelRepository;
-    private final CurrentUser currentUser;
     private final UserRepository userRepository;
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, CurrentUser currentUser, UserRepository userRepository) {
+    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, UserRepository userRepository) {
         this.offerRepository = offerRepository;
         this.modelRepository = modelRepository;
-        this.currentUser = currentUser;
         this.userRepository = userRepository;
     }
 
     @Override
     public Long createOffer(CreateOfferDTO createOfferDTO) {
 
-        User user = this.userRepository.findByFirstName(this.currentUser.getFirstName());
+        UserEntity userEntity = this.userRepository.findByFirstName("test"); //TODO fix this
 
         Offer offer = map(createOfferDTO);
 
@@ -45,7 +42,7 @@ public class OfferServiceImpl implements OfferService {
                 new IllegalArgumentException("Model with id " + createOfferDTO.getModelId() + " not found")
         );
 
-        offer.setSeller(user);
+        offer.setSeller(userEntity);
 
         offer.setModel(model);
         this.offerRepository.save(offer);

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
-public class User extends BaseEntity {
+public class UserEntity extends BaseEntity {
 
     @Column(unique = true, nullable = false)
     private String email;
@@ -26,14 +26,14 @@ public class User extends BaseEntity {
 
     private LocalDateTime modified;
 
-    public User() {
+    public UserEntity() {
     }
 
     public String getEmail() {
         return email;
     }
 
-    public User setEmail(String email) {
+    public UserEntity setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -42,7 +42,7 @@ public class User extends BaseEntity {
         return password;
     }
 
-    public User setPassword(String password) {
+    public UserEntity setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -51,7 +51,7 @@ public class User extends BaseEntity {
         return firstName;
     }
 
-    public User setFirstName(String firstName) {
+    public UserEntity setFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
@@ -60,7 +60,7 @@ public class User extends BaseEntity {
         return lastName;
     }
 
-    public User setLastName(String lastName) {
+    public UserEntity setLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
@@ -69,7 +69,7 @@ public class User extends BaseEntity {
         return isActive;
     }
 
-    public User setIsActive(Boolean active) {
+    public UserEntity setIsActive(Boolean active) {
         isActive = active;
         return this;
     }
@@ -78,7 +78,7 @@ public class User extends BaseEntity {
         return imageUrl;
     }
 
-    public User setImageUrl(String imageUrl) {
+    public UserEntity setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
         return this;
     }
@@ -87,7 +87,7 @@ public class User extends BaseEntity {
         return created;
     }
 
-    public User setCreated(LocalDateTime created) {
+    public UserEntity setCreated(LocalDateTime created) {
         this.created = created;
         return this;
     }
@@ -96,7 +96,7 @@ public class User extends BaseEntity {
         return modified;
     }
 
-    public User setModified(LocalDateTime modified) {
+    public UserEntity setModified(LocalDateTime modified) {
         this.modified = modified;
         return this;
     }

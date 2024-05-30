@@ -6,8 +6,8 @@ import org.softuni.mobilelele.model.dto.UserRegisterDTO;
 public interface UserService {
     void registerUser(UserRegisterDTO userRegisterDTO);
 
-    boolean loginUser(UserLoginDTO userLoginDTO);
-
-    void logoutUser();
+//    boolean loginUser(UserLoginDTO userLoginDTO);
+//
+//    void logoutUser();
 
 }

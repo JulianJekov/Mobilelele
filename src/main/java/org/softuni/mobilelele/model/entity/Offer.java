@@ -2,7 +2,6 @@ package org.softuni.mobilelele.model.entity;
 
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.descriptor.jdbc.VarcharJdbcType;
 import org.softuni.mobilelele.model.enums.EngineEnum;
 import org.softuni.mobilelele.model.enums.TransmissionEnum;
 
@@ -42,7 +41,7 @@ public class Offer extends BaseEntity {
     private Model model;
 
     @ManyToOne
-    private User seller;
+    private UserEntity seller;
 
     public Offer() {
     }
@@ -146,11 +145,11 @@ public class Offer extends BaseEntity {
         return this;
     }
 
-    public User getSeller() {
+    public UserEntity getSeller() {
         return seller;
     }
 
-    public Offer setSeller(User seller) {
+    public Offer setSeller(UserEntity seller) {
         this.seller = seller;
         return this;
     }

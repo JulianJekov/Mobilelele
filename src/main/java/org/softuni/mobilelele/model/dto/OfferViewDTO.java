@@ -1,6 +1,5 @@
 package org.softuni.mobilelele.model.dto;
 
-import org.softuni.mobilelele.model.entity.User;
 import org.softuni.mobilelele.model.enums.EngineEnum;
 import org.softuni.mobilelele.model.enums.TransmissionEnum;
 
