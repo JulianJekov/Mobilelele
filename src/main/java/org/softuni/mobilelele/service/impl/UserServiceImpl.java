@@ -28,36 +28,6 @@ public class UserServiceImpl implements UserService {
         this.userRepository.save(map(userRegisterDTO));
     }
 
-//    @Override
-//    public boolean loginUser(UserLoginDTO userLoginDTO) {
-//
-//        final User user = this.userRepository.findByEmail(userLoginDTO.getEmail()).orElse(null);
-//
-//        boolean loginSuccess = false;
-//
-//        if (user != null) {
-//            final String rawPassword = userLoginDTO.getPassword();
-//            final String encodedPassword = user.getPassword();
-//
-//            loginSuccess = encodedPassword != null && this.passwordEncoder.matches(rawPassword, encodedPassword);
-//
-//            if (loginSuccess) {
-//                this.currentUser
-//                        .setLogged(true)
-//                        .setFirstName(user.getFirstName())
-//                        .setLastName(user.getLastName());
-//            } else {
-//                this.currentUser.logout();
-//            }
-//        }
-//
-//        return loginSuccess;
-//    }
-//    @Override
-//    public void logoutUser() {
-//        this.currentUser.logout();
-//    }
-
 
     private UserEntity map(UserRegisterDTO userRegisterDTO) {
         return new UserEntity()

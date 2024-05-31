@@ -83,7 +83,7 @@
                         th:errorclass="is-invalid"
                         class="form-control">
                     <option value="">- Select transmission type -</option>
-                    <option th:each="t : ${T(org.softuni.mobilelele.models.enums.TransmissionEnum).values()}"
+                    <option th:each="t : ${T(org.softuni.mobilelele.model.enums.TransmissionEnum).values()}"
                             th:text="${t}"
                             th:value="${t}">
                     </option>

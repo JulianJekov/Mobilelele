@@ -22,7 +22,7 @@ public class SecurityConfiguration {
                         // All static resources which are situated in js, images, css are available for anyone
                         .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                         // Allow anyone to see the home page, the registration page and the login form
-                        .requestMatchers("/", "users/login", "users/register").permitAll()
+                        .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         // All other requests are authenticated
                         .anyRequest().authenticated()
         ).formLogin(
@@ -30,20 +30,20 @@ public class SecurityConfiguration {
                     // Redirect here when we access something which is not allowed
                     // Also this is the page where perform login.
                     formLogin
-                            .loginPage("users/login")
+                            .loginPage("/users/login")
                             // The names of the input fields (in our case in auth-login.html)
                             .usernameParameter("email")
                             .passwordParameter("password")
                             .defaultSuccessUrl("/")
-                            .failureForwardUrl("users/login-error");
+                            .failureForwardUrl("/users/login-error");
                 }
         ).logout(
                 logout -> {
                     logout
                             // The url where we should POST something in order to perform the logout
-                            .logoutUrl("users/logout")
+                            .logoutUrl("/users/logout")
                             // Where to go when logout
-                            .logoutSuccessUrl("/")
+                            .logoutSuccessUrl("/users/register")
                             // invalidate the http session
                             .invalidateHttpSession(true);
                 }
