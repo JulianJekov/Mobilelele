@@ -20,7 +20,7 @@
 
             <div class="card-body pb-1">
                 <h5
-                        th:text="|Year: ${offer.year} Brand: ${offer.brand} Model: ${offer.models}|"
+                        th:text="|Year: ${offer.year} Brand: ${offer.brand} Model: ${offer.model}|"
                         class="card-title">
                     Offer year Brand name Model name</h5>
             </div>
@@ -30,8 +30,8 @@
                     <div class="card-text"><span th:text="|Price: *{price.stripTrailingZeros().toPlainString()} bgn|">Price</span></div>
                     <div class="card-text"><span th:text="|Engine: *{#strings.capitalize(engine.toString().toLowerCase())}|">Engine type</span></div>
                     <div class="card-text"><span th:text="|Transmision: *{#strings.capitalize(transmission.toString().toLowerCase())}|">Transmission type</span></div>
-                    <div class="card-text"><span th:text="|Offer Created: ${#temporals.format(offer.created, 'dd-MMM-yyyy')}|">Offer created</span></div>
-                    <div class="card-text"><span th:text="|Offer Modified: ${#temporals.format(offer.modified, 'dd-MMM-yyyy')}|">Offer modified</span></div>
+<!--                    <div class="card-text"><span th:text="|Offer Created: ${#temporals.format(offer.created, 'dd-MMM-yyyy')}|">Offer created</span></div>-->
+<!--                    <div class="card-text"><span th:text="|Offer Modified: ${#temporals.format(offer.modified, 'dd-MMM-yyyy')}|">Offer modified</span></div>-->
                     <div class="card-text"><span th:text="|Seller: *{seller}|">Seller - First and Last name</span></div>
                 </li>
             </ul>

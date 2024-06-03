@@ -29,10 +29,6 @@ public class OfferViewDTO {
 
     private String brand;
 
-    private LocalDateTime created;
-
-    private LocalDateTime modified;
-
     private String seller;
 
     public OfferViewDTO() {
@@ -119,14 +115,6 @@ public class OfferViewDTO {
         return this;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public OfferViewDTO setCreated(LocalDateTime created) {
-        this.created = created;
-        return this;
-    }
 
     public String getBrand() {
         return brand;
@@ -137,14 +125,6 @@ public class OfferViewDTO {
         return this;
     }
 
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public OfferViewDTO setModified(LocalDateTime modified) {
-        this.modified = modified;
-        return this;
-    }
 
     public String getSeller() {
         return seller;

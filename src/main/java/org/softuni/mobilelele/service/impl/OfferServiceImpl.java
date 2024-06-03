@@ -95,8 +95,6 @@ public class OfferServiceImpl implements OfferService {
                 .setYear(offer.getYear())
                 .setModel(offer.getModel().getName())
                 .setBrand(offer.getModel().getBrand().getName())
-                .setCreated(offer.getCreated())
-                .setModified(offer.getModified() != null ? offer.getModified() : offer.getCreated())
                 .setSeller(offer.getSeller() != null ?
                         offer.getSeller().getFirstName() + " " + offer.getSeller().getLastName() : "Anonymous");
     }
@@ -109,8 +107,7 @@ public class OfferServiceImpl implements OfferService {
                 .setImageUrl(createOfferDTO.getImageUrl())
                 .setMileage(createOfferDTO.getMileage())
                 .setPrice(createOfferDTO.getPrice())
-                .setYear(createOfferDTO.getYear())
-                .setCreated(LocalDateTime.now());
+                .setYear(createOfferDTO.getYear());
     }
 
     private void map(UpdateOfferDTO updateOfferDTO, Offer offer) {
@@ -121,8 +118,7 @@ public class OfferServiceImpl implements OfferService {
                 .setImageUrl(updateOfferDTO.getImageUrl())
                 .setMileage(updateOfferDTO.getMileage())
                 .setPrice(updateOfferDTO.getPrice())
-                .setYear(updateOfferDTO.getYear())
-                .setModified(LocalDateTime.now());
+                .setYear(updateOfferDTO.getYear());
     }
 
     public UpdateOfferDTO updateMap(Offer offer) {

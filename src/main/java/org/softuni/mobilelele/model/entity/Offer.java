@@ -33,10 +33,6 @@ public class Offer extends BaseEntity {
 
     private Integer year;
 
-    private LocalDateTime created;
-
-    private LocalDateTime modified;
-
     @ManyToOne
     private Model model;
 
@@ -118,23 +114,6 @@ public class Offer extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public Offer setCreated(LocalDateTime created) {
-        this.created = created;
-        return this;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public Offer setModified(LocalDateTime modified) {
-        this.modified = modified;
-        return this;
-    }
 
     public Model getModel() {
         return model;

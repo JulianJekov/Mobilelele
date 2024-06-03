@@ -32,7 +32,6 @@ public class UserServiceImpl implements UserService {
     private UserEntity map(UserRegisterDTO userRegisterDTO) {
         return new UserEntity()
                 .setIsActive(true)
-                .setCreated(LocalDateTime.now())
                 .setFirstName(userRegisterDTO.getFirstName())
                 .setLastName(userRegisterDTO.getLastName())
                 .setEmail(userRegisterDTO.getEmail())

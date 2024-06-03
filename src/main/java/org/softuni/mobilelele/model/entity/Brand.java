@@ -15,9 +15,6 @@ public class Brand extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
-    private LocalDateTime created;
-
-    private LocalDateTime modified;
 
     @OneToMany(mappedBy = "brand", fetch = FetchType.LAZY)
 //    @Fetch(FetchMode.SUBSELECT)
@@ -35,23 +32,6 @@ public class Brand extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public Brand setCreated(LocalDateTime created) {
-        this.created = created;
-        return this;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public Brand setModified(LocalDateTime modified) {
-        this.modified = modified;
-        return this;
-    }
 
     public List<Model> getModels() {
         return models;

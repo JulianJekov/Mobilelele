@@ -2,7 +2,8 @@ package org.softuni.mobilelele.model.entity;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -11,6 +12,12 @@ public class UserEntity extends BaseEntity {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private List<Role> roles = new ArrayList<>();
 
     private String password;
 
@@ -21,10 +28,6 @@ public class UserEntity extends BaseEntity {
     private Boolean isActive;
 
     private String imageUrl;
-
-    private LocalDateTime created;
-
-    private LocalDateTime modified;
 
     public UserEntity() {
     }
@@ -83,21 +86,12 @@ public class UserEntity extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
+    public List<Role> getRoles() {
+        return roles;
     }
 
-    public UserEntity setCreated(LocalDateTime created) {
-        this.created = created;
-        return this;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public UserEntity setModified(LocalDateTime modified) {
-        this.modified = modified;
+    public UserEntity setRoles(List<Role> roles) {
+        this.roles = roles;
         return this;
     }
 }

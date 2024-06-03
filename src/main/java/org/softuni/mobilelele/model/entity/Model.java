@@ -24,10 +24,6 @@ public class Model extends BaseEntity {
 
     private Integer endYear;
 
-    private LocalDateTime created;
-
-    private LocalDateTime modified;
-
     @ManyToOne
     private Brand brand;
 
@@ -79,23 +75,6 @@ public class Model extends BaseEntity {
         return this;
     }
 
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    public Model setCreated(LocalDateTime created) {
-        this.created = created;
-        return this;
-    }
-
-    public LocalDateTime getModified() {
-        return modified;
-    }
-
-    public Model setModified(LocalDateTime modified) {
-        this.modified = modified;
-        return this;
-    }
 
     public Brand getBrand() {
         return brand;
