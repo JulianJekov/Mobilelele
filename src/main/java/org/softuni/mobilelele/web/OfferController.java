@@ -3,7 +3,6 @@ package org.softuni.mobilelele.web;
 import jakarta.validation.Valid;
 import org.softuni.mobilelele.model.dto.CreateOfferDTO;
 import org.softuni.mobilelele.model.dto.UpdateOfferDTO;
-import org.softuni.mobilelele.model.entity.Offer;
 import org.softuni.mobilelele.model.enums.EngineEnum;
 import org.softuni.mobilelele.model.enums.TransmissionEnum;
 import org.softuni.mobilelele.service.BrandService;
@@ -58,10 +57,9 @@ public class OfferController {
     }
 
     @GetMapping("/{id}/update")
-    public String update(@PathVariable Long id, Model model) {
+    public String update(@PathVariable("id") Long id, Model model) {
 
-        Offer offer = this.offerService.findById(id);
-        UpdateOfferDTO updateOfferDTO = this.offerService.updateMap(offer);
+        UpdateOfferDTO updateOfferDTO = this.offerService.getOfferForUpdate(id);
 
         if (!model.containsAttribute("updateOfferDTO")) {
             model.addAttribute("updateOfferDTO", updateOfferDTO);
@@ -73,7 +71,7 @@ public class OfferController {
     }
 
     @PatchMapping("/{id}/update")
-    public String update(@PathVariable Long id, @Valid UpdateOfferDTO updateOfferDTO, BindingResult bindingResult,
+    public String update(@PathVariable("id") Long id, @Valid UpdateOfferDTO updateOfferDTO, BindingResult bindingResult,
                          RedirectAttributes rAtt) {
 
         if (bindingResult.hasErrors()) {
@@ -82,7 +80,7 @@ public class OfferController {
             return "redirect:/offer/update";
         }
 
-       this.offerService.updateOffer(updateOfferDTO);
+        this.offerService.updateOffer(updateOfferDTO);
         return "redirect:/offers/" + id + "/details";
     }
 

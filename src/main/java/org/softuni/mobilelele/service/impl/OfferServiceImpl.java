@@ -1,5 +1,7 @@
 package org.softuni.mobilelele.service.impl;
 
+import org.softuni.mobilelele.exception.ModelNotFoundException;
+import org.softuni.mobilelele.exception.OfferNotFoundException;
 import org.softuni.mobilelele.model.dto.CreateOfferDTO;
 import org.softuni.mobilelele.model.dto.OfferViewDTO;
 import org.softuni.mobilelele.model.dto.UpdateOfferDTO;
@@ -13,7 +15,6 @@ import org.softuni.mobilelele.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,13 +57,16 @@ public class OfferServiceImpl implements OfferService {
     }
 
     @Override
-    public OfferViewDTO findViewById(Long id) {
-        return this.offerRepository.findById(id).map(this::map).get();
+    public OfferViewDTO findOfferViewById(Long id) {
+        Offer offer = this.offerRepository.findById(id).orElseThrow(() ->
+                new OfferNotFoundException("Offer with id " + id + " not found!"));
+        return map(offer);
     }
 
     @Override
     public Offer findById(Long id) {
-        return this.offerRepository.findById(id).get();
+        return this.offerRepository.findById(id).orElseThrow(() ->
+                new OfferNotFoundException("Offer with id " + id + " not found!"));
     }
 
     @Override
@@ -72,15 +76,24 @@ public class OfferServiceImpl implements OfferService {
 
     @Override
     public void updateOffer(UpdateOfferDTO updateOfferDTO) {
-        Offer offer = this.offerRepository.findById(updateOfferDTO.getId()).get();
+        Long id = updateOfferDTO.getId();
+        Offer offer = this.offerRepository.findById(id).orElseThrow(() ->
+                new OfferNotFoundException("Offer with id " + id + " not found!"));
 
         Model model = this.modelRepository.findById(updateOfferDTO.getModelId()).orElseThrow(() ->
-                new IllegalArgumentException("Model with id " + updateOfferDTO.getModelId() + " not found")
+                new ModelNotFoundException("Model with id " + updateOfferDTO.getModelId() + " not found")
         );
 
         offer.setModel(model);
         map(updateOfferDTO, offer);
         this.offerRepository.save(offer);
+    }
+
+    @Override
+    public UpdateOfferDTO getOfferForUpdate(Long id) {
+        Offer offer = this.offerRepository.findById(id).orElseThrow(() ->
+                new OfferNotFoundException("Offer with id " + id + " not found!"));
+        return updateMap(offer);
     }
 
     private OfferViewDTO map(Offer offer) {
@@ -132,5 +145,4 @@ public class OfferServiceImpl implements OfferService {
                 .setDescription(offer.getDescription())
                 .setImageUrl(offer.getImageUrl());
     }
-
 }

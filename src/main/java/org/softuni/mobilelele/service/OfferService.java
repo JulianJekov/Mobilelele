@@ -11,12 +11,12 @@ public interface OfferService {
     Long createOffer(CreateOfferDTO createOfferDTO);
     List<OfferViewDTO> getAllOffers();
 
-    OfferViewDTO findViewById(Long id);
+    OfferViewDTO findOfferViewById(Long id);
     Offer findById(Long id);
 
     void deleteOffer(Long id);
 
     void updateOffer(UpdateOfferDTO updateOfferDTO);
 
-    UpdateOfferDTO updateMap(Offer offer);
+    UpdateOfferDTO getOfferForUpdate(Long id);
 }

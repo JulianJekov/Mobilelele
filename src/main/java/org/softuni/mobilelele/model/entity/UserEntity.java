@@ -29,6 +29,7 @@ public class UserEntity extends BaseEntity {
 
     private String imageUrl;
 
+
     public UserEntity() {
     }
 
