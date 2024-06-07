@@ -1,10 +1,11 @@
-package org.softuni.mobilelele.service;
+package org.softuni.mobilelele.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.softuni.mobilelele.model.dto.ExchangeRatesDTO;
 import org.softuni.mobilelele.model.entity.ExchangeRate;
 import org.softuni.mobilelele.repository.ExchangeRateRepository;
+import org.softuni.mobilelele.service.CurrencyService;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

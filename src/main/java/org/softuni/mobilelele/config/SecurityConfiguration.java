@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
@@ -17,6 +20,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfiguration {
 
     private final String rememberMeKey;
+    private final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
     public SecurityConfiguration(@Value("${mobilele.remember.me.key}") String rememberMeKey) {
         this.rememberMeKey = rememberMeKey;
@@ -32,6 +36,8 @@ public class SecurityConfiguration {
                         // Allow anyone to see the home page, the registration page and the login form
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/offers/all").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/offers/**").permitAll()
+                        .requestMatchers("/error").permitAll()
                         .requestMatchers("/brands/all").hasRole(UserRoleEnum.ADMIN.name())
                         // All other requests are authenticated
                         .anyRequest().authenticated()

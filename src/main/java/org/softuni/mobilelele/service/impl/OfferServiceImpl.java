@@ -12,10 +12,12 @@ import org.softuni.mobilelele.repository.ModelRepository;
 import org.softuni.mobilelele.repository.OfferRepository;
 import org.softuni.mobilelele.repository.UserRepository;
 import org.softuni.mobilelele.service.OfferService;
+import org.softuni.mobilelele.util.LoggedUserEmail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,18 +26,20 @@ public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final ModelRepository modelRepository;
     private final UserRepository userRepository;
+    private final LoggedUserEmail loggedUserEmail;
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, UserRepository userRepository) {
+    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, UserRepository userRepository, LoggedUserEmail loggedUserEmail) {
         this.offerRepository = offerRepository;
         this.modelRepository = modelRepository;
         this.userRepository = userRepository;
+        this.loggedUserEmail = loggedUserEmail;
     }
 
     @Override
     public Long createOffer(CreateOfferDTO createOfferDTO) {
 
-        UserEntity userEntity = this.userRepository.findByFirstName("test"); //TODO fix this
+        Optional<UserEntity> userEntity = this.userRepository.findByEmail(loggedUserEmail.getEmail());
 
         Offer offer = map(createOfferDTO);
 
@@ -43,7 +47,7 @@ public class OfferServiceImpl implements OfferService {
                 new IllegalArgumentException("Model with id " + createOfferDTO.getModelId() + " not found")
         );
 
-        offer.setSeller(userEntity);
+        offer.setSeller(userEntity.get());
 
         offer.setModel(model);
         this.offerRepository.save(offer);

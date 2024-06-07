@@ -1,5 +1,6 @@
 package org.softuni.mobilelele.config;
 
+import org.softuni.mobilelele.util.LoggedUserEmail;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,12 +14,16 @@ import org.springframework.web.client.RestTemplate;
 public class AppConfig {
 
 
-
     @Bean
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
+    }
+
+    @Bean
+    public LoggedUserEmail loggedUserEmail() {
+        return new LoggedUserEmail();
     }
 
 }
