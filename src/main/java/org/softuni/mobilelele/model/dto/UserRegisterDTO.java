@@ -22,10 +22,14 @@ public class UserRegisterDTO {
     @NotEmpty
     private String password;
 
-    @NotEmpty(message = "Confirm Password is required")
+//    @NotEmpty(message = "Confirm Password is required")
     private String confirmPassword;
 
     public UserRegisterDTO() {
+    }
+
+    public String getFullName() {
+        return this.firstName + " " + this.lastName;
     }
 
     public String getFirstName() {
