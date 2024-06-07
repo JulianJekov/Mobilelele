@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head th:replace="~{fragments/head}">
 </head>
@@ -35,7 +36,7 @@
                     <div class="card-text"><span th:text="|Seller: *{seller}|">Seller - First and Last name</span></div>
                 </li>
             </ul>
-            <div class="card-body">
+            <div class="card-body" sec:authorize="isAuthenticated()">
                 <div class="row">
                     <form th:action="@{/offers/{id}(id=*{id})}" th:method="DELETE">
                         <input type="submit" class="btn btn-link" value="Delete">

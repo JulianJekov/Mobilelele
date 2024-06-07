@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    password: 12345
+    password: ${db_password}
     url: jdbc:mysql://localhost:3306/mobilelele?useSSL=false&createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true
-    username: root
+    username: ${db_username}
   devtools:
     livereload:
       enabled: true
