@@ -35,11 +35,6 @@ spring:
       static-locations: file:src/main/resources/static/
       cache:
         period: 0
-  mail:
-    host: localhost
-    port: 1025
-    username: ${MAIL_USER}
-    password: ${MAIL_PASSWORD}
 
 logging:
   level:
@@ -57,5 +52,13 @@ open.exchange.rates:
 
 mobilele:
   remember.me.key: ${REMEMBER_ME_KEY}
+
+mail:
+  mobilele: "mobilele@example.com"
+  host: localhost
+  port: 1025
+  username: ${MAIL_USER}
+  password: ${MAIL_PASSWORD}
+
 
 
