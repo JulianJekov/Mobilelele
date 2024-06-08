@@ -25,10 +25,12 @@ dependencies {
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     testImplementation 'org.springframework.security:spring-security-test'
-    runtimeOnly 'com.mysql:mysql-connector-j'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.hsqldb:hsqldb'
+    runtimeOnly 'com.mysql:mysql-connector-j'
     compileOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'com.icegreen:greenmail:2.0.0'
 }
 
 tasks.named('test') {

@@ -49,6 +49,6 @@ public class EmailServiceImpl implements EmailService {
         context.setVariable("username", userName);
         context.setVariable("activation_code", activationCode);
 
-        return templateEngine.process("email/registration-email", context);
+        return this.templateEngine.process("email/registration-email", context);
     }
 }

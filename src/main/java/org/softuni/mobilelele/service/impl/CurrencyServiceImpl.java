@@ -35,14 +35,14 @@ public class CurrencyServiceImpl implements CurrencyService {
 
         if (BGN_TO_USD != null) {
             ExchangeRate exchangeRate = new ExchangeRate().setCurrency("USD").setRate(BGN_TO_USD);
-            exchangeRateRepository.save(exchangeRate);
+            this.exchangeRateRepository.save(exchangeRate);
         } else {
             LOGGER.error("Unable to get exchange rate fro BGN TO USD");
         }
 
         if (BGN_TO_EUR != null) {
             ExchangeRate exchangeRate = new ExchangeRate().setCurrency("EUR").setRate(BGN_TO_EUR);
-            exchangeRateRepository.save(exchangeRate);
+            this.exchangeRateRepository.save(exchangeRate);
         } else {
             LOGGER.error("Unable to get exchange rate fro BGN TO EUR");
         }
