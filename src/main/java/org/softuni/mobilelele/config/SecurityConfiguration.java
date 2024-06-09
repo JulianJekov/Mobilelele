@@ -36,6 +36,7 @@ public class SecurityConfiguration {
                         // Allow anyone to see the home page, the registration page and the login form
                         .requestMatchers("/", "/users/login", "/users/register", "/users/login-error").permitAll()
                         .requestMatchers("/offers/all").permitAll()
+                        .requestMatchers("/api/currency/convert").permitAll()
                         .requestMatchers(HttpMethod.GET, "/offers/**").permitAll()
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/brands/all").hasRole(UserRoleEnum.ADMIN.name())
