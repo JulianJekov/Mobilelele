@@ -1,5 +1,7 @@
 package org.softuni.mobilelele.service.impl;
 
+import jakarta.transaction.Transactional;
+import org.softuni.mobilelele.aop.WarnIfExecutionExceeds;
 import org.softuni.mobilelele.exception.ModelNotFoundException;
 import org.softuni.mobilelele.exception.OfferNotFoundException;
 import org.softuni.mobilelele.model.dto.CreateOfferDTO;
@@ -61,15 +63,17 @@ public class OfferServiceImpl implements OfferService {
         return offer.getId();
     }
 
+    @WarnIfExecutionExceeds(timeInMillis = 1000L)
+    @Override
     public List<OfferViewDTO> getAllOffers(UserDetails viewer) {
-        this.monitoringService.logOfferSearch();
         return this.offerRepository.findAll().stream()
                 .map(offer -> mapOfferView(offer, viewer))
                 .collect(Collectors.toList());
     }
 
+    @WarnIfExecutionExceeds(timeInMillis = 500L)
     @Override
-    public OfferViewDTO findOfferViewById(Long id, UserDetails viewer) {
+    public OfferViewDTO getOfferDetails(Long id, UserDetails viewer) {
         Offer offer = this.offerRepository.findById(id).orElseThrow(() ->
                 new OfferNotFoundException("Offer with id " + id + " not found!"));
         return mapOfferView(offer, viewer);
@@ -81,6 +85,7 @@ public class OfferServiceImpl implements OfferService {
                 new OfferNotFoundException("Offer with id " + id + " not found!"));
     }
 
+    @Transactional
     @Override
     public void deleteOffer(Long id) {
         this.offerRepository.deleteById(id);

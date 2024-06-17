@@ -30,7 +30,7 @@ public class OffersController {
 
     @GetMapping("/{id}/details")
     public String showOffer(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal UserDetails viewer) {
-        model.addAttribute("offer", this.offerService.findOfferViewById(id, viewer));
+        model.addAttribute("offer", this.offerService.getOfferDetails(id, viewer));
         return "details";
     }
 

@@ -10,10 +10,13 @@ import java.util.List;
 
 public interface OfferService {
     Long createOffer(CreateOfferDTO createOfferDTO, UserDetails seller);
+
     List<OfferViewDTO> getAllOffers(UserDetails viewer);
 
-    OfferViewDTO findOfferViewById(Long id, UserDetails viewer);
+    OfferViewDTO getOfferDetails(Long id, UserDetails viewer);
+
     Offer findById(Long id);
+
 
     void deleteOffer(Long id);
 
