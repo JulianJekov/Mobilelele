@@ -7,17 +7,22 @@ import org.softuni.mobilelele.model.dto.OfferViewDTO;
 import org.softuni.mobilelele.model.dto.UpdateOfferDTO;
 import org.softuni.mobilelele.model.entity.Model;
 import org.softuni.mobilelele.model.entity.Offer;
+import org.softuni.mobilelele.model.entity.Role;
 import org.softuni.mobilelele.model.entity.UserEntity;
+import org.softuni.mobilelele.model.enums.UserRoleEnum;
 import org.softuni.mobilelele.repository.ModelRepository;
 import org.softuni.mobilelele.repository.OfferRepository;
 import org.softuni.mobilelele.repository.UserRepository;
+import org.softuni.mobilelele.service.MonitoringService;
 import org.softuni.mobilelele.service.OfferService;
 import org.softuni.mobilelele.util.LoggedUserEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,45 +31,48 @@ public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final ModelRepository modelRepository;
     private final UserRepository userRepository;
-    private final LoggedUserEmail loggedUserEmail;
+    private final MonitoringService monitoringService;
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, UserRepository userRepository, LoggedUserEmail loggedUserEmail) {
+    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, UserRepository userRepository, MonitoringService monitoringService) {
         this.offerRepository = offerRepository;
         this.modelRepository = modelRepository;
         this.userRepository = userRepository;
-        this.loggedUserEmail = loggedUserEmail;
+        this.monitoringService = monitoringService;
     }
 
     @Override
-    public Long createOffer(CreateOfferDTO createOfferDTO) {
+    public Long createOffer(CreateOfferDTO createOfferDTO, UserDetails seller) {
 
-        Optional<UserEntity> userEntity = this.userRepository.findByEmail(loggedUserEmail.getEmail());
+        UserEntity userEntity = this.userRepository.findByEmail(seller.getUsername())
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("User with email " + seller.getUsername() + " not found"));
 
-        Offer offer = map(createOfferDTO);
+        Offer offer = mapOffer(createOfferDTO);
 
         Model model = this.modelRepository.findById(createOfferDTO.getModelId()).orElseThrow(() ->
                 new IllegalArgumentException("Model with id " + createOfferDTO.getModelId() + " not found")
         );
 
-        offer.setSeller(userEntity.get());
+        offer.setSeller(userEntity);
 
         offer.setModel(model);
         this.offerRepository.save(offer);
         return offer.getId();
     }
 
-    public List<OfferViewDTO> getAllOffers() {
+    public List<OfferViewDTO> getAllOffers(UserDetails viewer) {
+        this.monitoringService.logOfferSearch();
         return this.offerRepository.findAll().stream()
-                .map(this::map)
+                .map(offer -> mapOfferView(offer, viewer))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public OfferViewDTO findOfferViewById(Long id) {
+    public OfferViewDTO findOfferViewById(Long id, UserDetails viewer) {
         Offer offer = this.offerRepository.findById(id).orElseThrow(() ->
                 new OfferNotFoundException("Offer with id " + id + " not found!"));
-        return map(offer);
+        return mapOfferView(offer, viewer);
     }
 
     @Override
@@ -89,7 +97,7 @@ public class OfferServiceImpl implements OfferService {
         );
 
         offer.setModel(model);
-        map(updateOfferDTO, offer);
+        mapUpdateOffer(updateOfferDTO, offer);
         this.offerRepository.save(offer);
     }
 
@@ -100,7 +108,9 @@ public class OfferServiceImpl implements OfferService {
         return updateMap(offer);
     }
 
-    private OfferViewDTO map(Offer offer) {
+
+
+    private OfferViewDTO mapOfferView(Offer offer, UserDetails viewer) {
         return new OfferViewDTO()
                 .setId(offer.getId())
                 .setDescription(offer.getDescription())
@@ -112,11 +122,38 @@ public class OfferServiceImpl implements OfferService {
                 .setYear(offer.getYear())
                 .setModel(offer.getModel().getName())
                 .setBrand(offer.getModel().getBrand().getName())
-                .setSeller(offer.getSeller() != null ?
-                        offer.getSeller().getFirstName() + " " + offer.getSeller().getLastName() : "Anonymous");
+                .setSeller(offer.getSeller().getFirstName() + " " + offer.getSeller().getLastName())
+                .setViewerIsOwner(isOwner(offer, viewer != null ? viewer.getUsername() : null));
     }
 
-    private Offer map(CreateOfferDTO createOfferDTO) {
+    @Override
+    public boolean isOwner(Long id, String username) {
+        return isOwner(this.offerRepository.findById(id).orElse(null), username);
+    }
+
+    private boolean isOwner(Offer offer, String username) {
+        if (offer == null || username == null) {
+            return false;
+        }
+
+        UserEntity viewerEntity = userRepository.findByEmail(username)
+                .orElseThrow(() ->
+                        new UsernameNotFoundException("Unknown user..."));
+
+        if (isAdmin(viewerEntity)) {
+            return true;
+        }
+
+        return Objects.equals(offer.getSeller().getId(), viewerEntity.getId());
+    }
+
+    private boolean isAdmin(UserEntity userEntity) {
+        return userEntity.getRoles().stream()
+                .map(Role::getRole)
+                .anyMatch(r -> UserRoleEnum.ADMIN == r);
+    }
+
+    private Offer mapOffer(CreateOfferDTO createOfferDTO) {
         return new Offer()
                 .setDescription(createOfferDTO.getDescription())
                 .setEngine(createOfferDTO.getEngine())
@@ -127,7 +164,7 @@ public class OfferServiceImpl implements OfferService {
                 .setYear(createOfferDTO.getYear());
     }
 
-    private void map(UpdateOfferDTO updateOfferDTO, Offer offer) {
+    private void mapUpdateOffer(UpdateOfferDTO updateOfferDTO, Offer offer) {
         offer
                 .setDescription(updateOfferDTO.getDescription())
                 .setEngine(updateOfferDTO.getEngine())

@@ -1,6 +1,9 @@
 package org.softuni.mobilelele.web;
 
 import org.softuni.mobilelele.service.OfferService;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,19 +23,20 @@ public class OffersController {
     }
 
     @GetMapping("/all")
-    public String allOffers(Model model) {
-        model.addAttribute("offers", this.offerService.getAllOffers());
+    public String allOffers(Model model, @AuthenticationPrincipal UserDetails viewer) {
+        model.addAttribute("offers", this.offerService.getAllOffers(viewer));
         return "offers";
     }
 
     @GetMapping("/{id}/details")
-    public String showOffer(@PathVariable Long id, Model model) {
-        model.addAttribute("offer", this.offerService.findOfferViewById(id));
+    public String showOffer(@PathVariable("id") Long id, Model model, @AuthenticationPrincipal UserDetails viewer) {
+        model.addAttribute("offer", this.offerService.findOfferViewById(id, viewer));
         return "details";
     }
 
+    @PreAuthorize("@offerServiceImpl.isOwner(#id, #principal.username)")
     @DeleteMapping("/{id}")
-    public String deleteOffer(@PathVariable Long id) {
+    public String deleteOffer(@PathVariable Long id, @AuthenticationPrincipal UserDetails principal) {
         this.offerService.deleteOffer(id);
 
         return "redirect:/offers/all";

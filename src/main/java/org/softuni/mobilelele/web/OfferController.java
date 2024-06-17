@@ -8,6 +8,8 @@ import org.softuni.mobilelele.model.enums.TransmissionEnum;
 import org.softuni.mobilelele.service.BrandService;
 import org.softuni.mobilelele.service.OfferService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,7 +46,7 @@ public class OfferController {
 
     @PostMapping("/add")
     public String add(@Valid CreateOfferDTO createOfferDTO, BindingResult bindingResult,
-                      RedirectAttributes rAtt) {
+                      RedirectAttributes rAtt, @AuthenticationPrincipal UserDetails seller) {
 
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("createOfferDTO", createOfferDTO);
@@ -52,7 +54,7 @@ public class OfferController {
             return "redirect:/offer/add";
         }
 
-        Long newId = this.offerService.createOffer(createOfferDTO);
+        Long newId = this.offerService.createOffer(createOfferDTO, seller);
         return "redirect:/offers/" + newId + "/details";
     }
 

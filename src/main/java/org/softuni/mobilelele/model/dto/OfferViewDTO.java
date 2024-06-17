@@ -31,6 +31,8 @@ public class OfferViewDTO {
 
     private String seller;
 
+    private boolean viewerIsOwner;
+
     public OfferViewDTO() {
     }
 
@@ -132,6 +134,15 @@ public class OfferViewDTO {
 
     public OfferViewDTO setSeller(String seller) {
         this.seller = seller;
+        return this;
+    }
+
+    public boolean isViewerIsOwner() {
+        return viewerIsOwner;
+    }
+
+    public OfferViewDTO setViewerIsOwner(boolean viewerIsOwner) {
+        this.viewerIsOwner = viewerIsOwner;
         return this;
     }
 }

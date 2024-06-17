@@ -24,6 +24,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     testImplementation 'org.springframework.security:spring-security-test'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.hsqldb:hsqldb'
@@ -31,6 +32,8 @@ dependencies {
     compileOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'com.icegreen:greenmail:2.0.0'
+    runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
+
 }
 
 tasks.named('test') {

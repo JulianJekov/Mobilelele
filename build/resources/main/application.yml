@@ -60,5 +60,11 @@ mail:
   username: ${MAIL_USER}
   password: ${MAIL_PASSWORD}
 
-
-
+management:
+  server:
+    port: 8081
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include: "*"
