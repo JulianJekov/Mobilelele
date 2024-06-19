@@ -33,14 +33,12 @@ public class OfferServiceImpl implements OfferService {
     private final OfferRepository offerRepository;
     private final ModelRepository modelRepository;
     private final UserRepository userRepository;
-    private final MonitoringService monitoringService;
 
     @Autowired
-    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, UserRepository userRepository, MonitoringService monitoringService) {
+    public OfferServiceImpl(OfferRepository offerRepository, ModelRepository modelRepository, UserRepository userRepository) {
         this.offerRepository = offerRepository;
         this.modelRepository = modelRepository;
         this.userRepository = userRepository;
-        this.monitoringService = monitoringService;
     }
 
     @Override
