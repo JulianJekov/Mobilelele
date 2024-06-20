@@ -1,6 +1,8 @@
 package org.softuni.mobilelele.web;
 
 import org.softuni.mobilelele.service.OfferService;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +25,9 @@ public class OffersController {
     }
 
     @GetMapping("/all")
-    public String allOffers(Model model, @AuthenticationPrincipal UserDetails viewer) {
-        model.addAttribute("offers", this.offerService.getAllOffers(viewer));
+    public String allOffers(Model model, @PageableDefault(size = 4, sort = "id") Pageable pageable,
+                            @AuthenticationPrincipal UserDetails viewer) {
+        model.addAttribute("offers", this.offerService.getAllOffers(pageable, viewer));
         return "offers";
     }
 

@@ -19,6 +19,8 @@ import org.softuni.mobilelele.service.MonitoringService;
 import org.softuni.mobilelele.service.OfferService;
 import org.softuni.mobilelele.util.LoggedUserEmail;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -63,10 +65,9 @@ public class OfferServiceImpl implements OfferService {
 
     @WarnIfExecutionExceeds(timeInMillis = 1000L)
     @Override
-    public List<OfferViewDTO> getAllOffers(UserDetails viewer) {
-        return this.offerRepository.findAll().stream()
-                .map(offer -> mapOfferView(offer, viewer))
-                .collect(Collectors.toList());
+    public Page<OfferViewDTO> getAllOffers(Pageable pageable, UserDetails viewer) {
+        return this.offerRepository.findAll(pageable)
+                .map(offer -> mapOfferView(offer, viewer));
     }
 
     @WarnIfExecutionExceeds(timeInMillis = 500L)
