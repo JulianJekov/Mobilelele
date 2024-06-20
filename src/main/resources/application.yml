@@ -68,3 +68,7 @@ management:
       base-path: /actuator
       exposure:
         include: "*"
+
+google.recaptcha:
+  key: ${RECAPTCHA_SITE_KEY:test}
+  secret: ${RECAPTCHA_SITE_SECRET:test}

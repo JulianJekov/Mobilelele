@@ -12,6 +12,10 @@ import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -41,6 +45,8 @@ public class UserActivationServiceImpl implements UserActivationService {
 
     @Override
     public void cleanUpObsoleteActivationLinks() {
+        List<UserActivationCode> byCreated = this.userActivationRepository.findByCreated();
+        this.userActivationRepository.deleteAll(byCreated);
 
     }
 
