@@ -25,7 +25,7 @@ public class UserEntity extends BaseEntity {
 
     private String lastName;
 
-    private Boolean isActive;
+    private boolean isActive;
 
     private String imageUrl;
 
