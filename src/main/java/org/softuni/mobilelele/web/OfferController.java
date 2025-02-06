@@ -79,7 +79,7 @@ public class OfferController {
         if (bindingResult.hasErrors()) {
             rAtt.addFlashAttribute("updateOfferDTO", updateOfferDTO);
             rAtt.addFlashAttribute("org.springframework.validation.BindingResult.updateOfferDTO", bindingResult);
-            return "redirect:/offer/update";
+            return "redirect:/offer/" + id + "/update";
         }
 
         this.offerService.updateOffer(updateOfferDTO);
